@@ -153,14 +153,14 @@ int main(int argc, char** argv)
         displayArray(A.data(), N);
 
     }
-    // Scatter input data to all processes
+    // Data distribution : scatter input data (that was broken into chunks) to all processes
     MPI_Scatter(A.data(), local_size, MPI_INT, localA.data(), local_size, MPI_INT, 0, MPI_COMM_WORLD);
 
     // Perform QS on the array; record the time taken by the process
     auto start = high_resolution_clock::now();
     quicksort(localA.data(), 0, local_size - 1);
    
-    // Gather the sorted portions back to process 0
+    // Gather the sorted portions back to process 0; each chunk is sorted, but not the whole array. The final step is merge, see below
     MPI_Gather(localA.data(), local_size, MPI_INT, A.data(), local_size, MPI_INT, 0, MPI_COMM_WORLD);
 
     if (rank == 0)
