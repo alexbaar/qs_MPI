@@ -23,7 +23,7 @@ void generateRandomArray(int* array, int size)
     mt19937 e2(time(nullptr));
 
     // Initialize array with non-zero values; if we skip this, there will be a zero value appearing in the sorted array, which 'steals' the spot of a number 
-	// from the initial array; we initialize with any number outside of the random number generator, here the range was set between -40000000 and 40000000.
+	// from the initial array; we initialize with any number outside of the random number generator, here the range was set between -100 and 100.
 	// so we can use numbers under the lower linit or over the upper limit from line 33
 	for (int i = 0; i < size; i++) {
 		array[i] = -999; // Set to a large negative value (guaranteed to be outside the range)
@@ -32,7 +32,7 @@ void generateRandomArray(int* array, int size)
 	// Initialize array with random values
     uniform_int_distribution<int> dist(-100, 100);
 
-	// Generate random values between -40000000 and 40000000 and assign them to A[i]
+	// Generate random values between -100 and 100 and assign them to A[i]
 	// the number from line 29 will be overwritten
     for (int i = 0; i < size; i++) {
         int random_value = dist(e2);
